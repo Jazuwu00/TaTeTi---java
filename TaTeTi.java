@@ -20,33 +20,33 @@ public class TaTeTi {
     private static boolean ganoJugador; // si es true gano el jugador, si es false gano la computadora
     private static boolean empate = false;
     private static boolean notermino = true; // no termino quiere decir q la partida no termino asi q seguira pidiendo los movimientos al jugador
+    private static boolean entro = false; // es para saber si ingreso por primera vez al menu o no
 
     //Imprime la tabla de idiomas para que el usuario escojan en que idioma jugar
     public void tabladeIdiomas() {
-        while (nosalir) {
-            System.out.println(d.mensajexIdioma(idioma, 33) + ": ");
-            System.out.println("1.Ingles\n2.Español\n3.Portugues");
-            Scanner dato = new Scanner(System.in);
-            //try catch para evitar la excepcion en caso de que el usuario ingrese una letra en lugar de un numero
-            try {
-                int miIdioma = dato.nextInt();
-                if (miIdioma > 0 && miIdioma < 4) {
-                    idioma = miIdioma;
+        System.out.println(d.mensajexIdioma(idioma, 33) + ": ");
+        System.out.println("1.Ingles\n2.Español\n3.Portugues");
+        Scanner dato = new Scanner(System.in);
+        //try catch para evitar la excepcion en caso de que el usuario ingrese una letra en lugar de un numero
+        try {
+            int miIdioma = dato.nextInt();
+            if (miIdioma > 0 && miIdioma < 4) {
+                idioma = miIdioma;
+                if (!entro) {
                     menu();
-
-                } else {
-                    System.out.println(d.mensajexIdioma(idioma, 14));
-                    System.out.println();
                 }
-            } catch (InputMismatchException e) {
+
+            } else {
                 System.out.println(d.mensajexIdioma(idioma, 14));
                 System.out.println();
             }
+        } catch (InputMismatchException e) {
+            System.out.println(d.mensajexIdioma(idioma, 14));
+            System.out.println();
         }
     }
 
     public void menu() {
-        int op;
         try {
             Connection miConexion = DriverManager.getConnection("jdbc:mysql://" + d.getConexion(), d.getUsuario(), d.getPassword());
             miStatement = miConexion.createStatement();
@@ -65,6 +65,8 @@ public class TaTeTi {
 
             int gano;
             boolean condicion = true;
+            Scanner l = new Scanner(System.in);
+            int op;
             while (condicion) {
                 // menu del juego
                 System.out.println("          " + d.mensajexIdioma(idioma, 1) + "          ");
@@ -73,7 +75,6 @@ public class TaTeTi {
                 System.out.println("3." + d.mensajexIdioma(idioma, 10));
                 System.out.println("4." + d.mensajexIdioma(idioma, 32));
                 System.out.println("5." + d.mensajexIdioma(idioma, 28));
-                Scanner l = new Scanner(System.in);
                 try {
                     op = l.nextInt();
                     if (op == 1) {
@@ -112,20 +113,22 @@ public class TaTeTi {
                         d.imprimirEstadisticas(idioma, nombredeljugador);
                     } else if (op == 4) {
                         seregistro = true;
+                        entro = true;
                         tabladeIdiomas();
                     } else if (op == 5) {
-                        nosalir = false;
                         condicion = false;
-
                     } else {
                         System.out.println(d.mensajexIdioma(idioma, 31));
                         System.out.println();
                     }
+
                 } catch (InputMismatchException e) {
                     System.out.println(d.mensajexIdioma(idioma, 31));
                     System.out.println();
                 }
+
             }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -185,6 +188,7 @@ public class TaTeTi {
                 }
             }
             if (!(ganador())) {
+                mostrarTablero();
                 anuncioDeGanador(ganoJugador);
                 notermino = false;
             } else if (empate) {
