@@ -192,6 +192,7 @@ public class TaTeTi {
                 anuncioDeGanador(ganoJugador);
                 notermino = false;
             } else if (empate) {
+                mostrarTablero();
                 notermino = false;
                 System.out.println(d.mensajexIdioma(idioma, 11));
             }
