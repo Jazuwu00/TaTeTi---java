@@ -10,7 +10,7 @@ public class TaTeTi {
     private final char J1 = 'X';
     private final char J2 = '0';
     private char jugador = J1;
-    private final conectaDB d = new conectaDB("localhost:3306/tateti", "root", "admin1");
+    private final conectaDB d = new conectaDB("localhost:3306/tateti", "root", "password");
     private Statement miStatement;
     private int idioma = 2; // idioma por defecto 2 (español) para mostrar la tabla de idiomas
     private String nombreJ;

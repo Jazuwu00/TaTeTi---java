@@ -39,14 +39,10 @@ public class conectaDB {
             Connection miConexion = DriverManager.getConnection("jdbc:mysql://" + this.conexion, this.usuario, this.password);
             Statement miStatement = miConexion.createStatement();
             ResultSet miResultSet;
-            //mensaje inicio partida
-            String inicio = mensajexIdioma(idioma,19);
 
-            //mensaje fin partida
-            String fin = mensajexIdioma(idioma, 20);
-
-            //mensaje Contra la maquina 
-            String contra = mensajexIdioma(idioma,21);
+            //mensaje " contra "
+            String contra = mensajexIdioma(idioma,35);
+            String computadora = mensajexIdioma(idioma,36);
 
             // resultado de la partida
             String resultado = " ";
@@ -60,7 +56,8 @@ public class conectaDB {
                 }
 
                 miResultSet = miStatement.executeQuery("SELECT * FROM registrodepartida rp INNER JOIN jugador j ON rp.idjugador = j.idjugador");
-
+                System.out.println(mensajexIdioma(idioma, 19) + "   | " + mensajexIdioma(idioma, 20) + "   |      " + mensajexIdioma(idioma, 21));
+                System.out.println("____________________________________________________________________________________________");
                 while (miResultSet.next()) {
                     //para el mensaje gano o perdio o empato
 
@@ -76,10 +73,11 @@ public class conectaDB {
                         //empate
                         resultado = mensajexIdioma(idioma, 27);
                     }
-
-                    System.out.println(inicio + " " + miResultSet.getString("inicioDePartida") + " " + fin + " " + miResultSet.getString("FinDePartida") + " " + miResultSet.getString("nombre") + " " + resultado + " " + contra);
+                    System.out.println(miResultSet.getString("inicioDePartida") + " | " + miResultSet.getString("FinDePartida") + " | " + miResultSet.getString("nombre") + "  " + resultado + " " + contra + " " + computadora);
 
                 }
+                System.out.println("____________________________________________________________________________________________");
+                System.out.println("\n");
 
 
             } else {
@@ -97,6 +95,8 @@ public class conectaDB {
                 }
                 if(existe){
                     System.out.println(mensajexIdioma(idioma, 18) + ": " + name + "\n");
+                    System.out.println(mensajexIdioma(idioma, 19) + "   | " + mensajexIdioma(idioma, 20) + "   |      " + mensajexIdioma(idioma, 21));
+                    System.out.println("____________________________________________________________________________________________");
                     miResultSet = miState.executeQuery("SELECT * FROM registrodepartida rp INNER JOIN jugador j ON rp.idjugador = j.idjugador WHERE j.nombre = '"+ name + "' ");
 
                     while (miResultSet.next()) {
@@ -113,8 +113,9 @@ public class conectaDB {
                             //empate
                             resultado = mensajexIdioma(idioma, 27);
                         }
-                        System.out.println(inicio + " " + miResultSet.getString("inicioDePartida") + " " + fin + " " + miResultSet.getString("FinDePartida") + " " + miResultSet.getString("nombre") + " " + resultado + " " + contra);
+                        System.out.println(" | " + miResultSet.getString("inicioDePartida") + " | " + miResultSet.getString("FinDePartida") + " | " + miResultSet.getString("nombre") + " " + resultado + " " + contra + " " + computadora);
                     }
+                    System.out.println("____________________________________________________________________________________________");
                 } else {
                     System.out.println(mensajexIdioma(idioma, 34) + ": " + name + "\n");
                 }
