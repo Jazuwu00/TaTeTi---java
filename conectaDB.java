@@ -48,12 +48,8 @@ public class conectaDB {
             String resultado = " ";
             if (name == null) {
                 //obtener registros
-
                 //mensaje estadisticas
-                miResultSet = miStatement.executeQuery("SELECT descripcion from mensajexidioma where id_Mensaje=30 and id_idioma =' "+ idioma + " ' ");
-                while (miResultSet.next()) {
-                    System.out.println(miResultSet.getString("descripcion"));
-                }
+                System.out.println(mensajexIdioma(idioma, 30));
 
                 miResultSet = miStatement.executeQuery("SELECT * FROM registrodepartida rp INNER JOIN jugador j ON rp.idjugador = j.idjugador");
                 System.out.println(mensajexIdioma(idioma, 19) + "   | " + mensajexIdioma(idioma, 20) + "   |      " + mensajexIdioma(idioma, 21));
@@ -168,6 +164,7 @@ public class conectaDB {
             while (miResulSet.next()) {
                 mensaje = miResulSet.getString("descripcion");
             }
+            miConexion.close();
         } catch (Exception e) {
             System.out.println(e);
         }

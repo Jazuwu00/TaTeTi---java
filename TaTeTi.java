@@ -9,14 +9,12 @@ public class TaTeTi {
     private char[][] tablero;
     private final char J1 = 'X';
     private final char J2 = '0';
-    private char jugador = J1;
-    private final conectaDB d = new conectaDB("localhost:3306/tateti", "root", "");
+    private final conectaDB d = new conectaDB("localhost:3306/tateti", "root", "password");
     private Statement miStatement;
     private int idioma = 2; // idioma por defecto 2 (español) para mostrar la tabla de idiomas
     private String nombreJ;
     private boolean seregistro; // boolean para que solo se pueda pedir 1 vez el nombre al usuario que corre el programa
     private static String nombreJugador;
-    private boolean nosalir = true;
     private static boolean ganoJugador; // si es true gano el jugador, si es false gano la computadora
     private static boolean empate = false;
     private static boolean notermino = true; // no termino quiere decir q la partida no termino asi q seguira pidiendo los movimientos al jugador
@@ -97,7 +95,7 @@ public class TaTeTi {
                             gano = 1;
                         } else if (empate) {
                             gano = 2;
-                        } else  {
+                        } else {
                             gano = 0;
                         }
 
@@ -164,6 +162,7 @@ public class TaTeTi {
     }
 
     public boolean jugar(boolean notermino) {
+        empate = false;
         boolean continuarPartida = true;
         while (continuarPartida) {
             if (chequeodeEmpate()) {
