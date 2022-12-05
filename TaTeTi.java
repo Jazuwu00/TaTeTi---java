@@ -10,7 +10,7 @@ public class TaTeTi {
     private final char J1 = 'X';
     private final char J2 = '0';
     private char jugador = J1;
-    private final conectaDB d = new conectaDB("localhost:3306/tateti", "root", "password");
+    private final conectaDB d = new conectaDB("localhost:3306/tateti", "root", "");
     private Statement miStatement;
     private int idioma = 2; // idioma por defecto 2 (español) para mostrar la tabla de idiomas
     private String nombreJ;
@@ -93,12 +93,12 @@ public class TaTeTi {
                         }
                         notermino = true;
 
-                        if (ganoJugador && !empate) {
+                        if (ganoJugador) {
                             gano = 1;
-                        } else if (!ganoJugador && !empate) {
-                            gano = 0;
-                        } else {
+                        } else if (empate) {
                             gano = 2;
+                        } else  {
+                            gano = 0;
                         }
 
                         Date fin = new Date();
